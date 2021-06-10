@@ -1,0 +1,16 @@
+---
+- name: Set logging host 
+  hosts: all
+  vars:
+    creds:
+      host: "{{ host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+
+  tasks:
+    - name: SET LOGGING 
+      ios_config:
+        provider: "{{ creds }}"
+        lines: "logging host 10.35.3.116 transport udp port 5514"
+        match: exact
+        save: true

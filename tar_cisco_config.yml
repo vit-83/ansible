@@ -1,0 +1,11 @@
+---
+- name: Tar cisco config files
+  vars:
+      date: "{{ lookup('pipe', 'date +%Y%m%d-%H%M') }}"
+#  tasks:
+#    - name Tar cisco config files
+  - archive:
+	    path: /etc/ansible/playbooks/cisco_backup
+	    dest: /etc/ansible/playbooks/cisco_backup/cisco_backup_{{ date }}.tgz
+#	    remove: yes
+

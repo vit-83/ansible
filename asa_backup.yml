@@ -1,0 +1,23 @@
+---
+- name: Save Configurations 
+  hosts: all
+  vars:
+    creds:
+      host: "{{ host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      authorize: yes
+      auth_pass: "{{ password }}"      
+
+  tasks:
+    - name: BACKUP THE CONFIG
+      asa_config:
+        provider: "{{ creds }}"
+        backup: yes
+      register: config_output
+
+    - name: RENAME BACKUP
+      copy:
+        src: "{{config_output.backup_path}}"
+        dest: "/etc/ansible/playbooks/cisco_backup/{{inventory_hostname}}_cfg_{{ansible_date_time.date}}"
+

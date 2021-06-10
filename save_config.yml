@@ -1,0 +1,16 @@
+---
+- name: Save Configurations 
+  hosts: all
+  vars:
+    creds:
+      host: "{{ host }}"
+      username: "KMMuser"
+      password: ""
+
+  tasks:
+    - name: SHOW ACL 
+      ios_command:
+        provider: "{{ creds }}"
+        commands:
+          - "copy running-config startup-config"
+      register: output

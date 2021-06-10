@@ -1,0 +1,28 @@
+---
+- name: Save Configurations 
+  hosts: all
+  vars:
+    creds:
+      host: "{{ host }}"
+      username: "KMMuser"
+      password: ""
+
+  tasks:
+    - name: ADD LINE IN ACL 98
+      ios_config:
+        provider: "{{ creds }}"
+        parents: "ip access-list standard 98"
+        lines: "20 permit 192.168.1.20"
+        match: exact
+        save: true
+
+    - name: SHOW ACL 
+      ios_command:
+        provider: "{{ creds }}"
+        commands:
+          - "show access-lists 98"
+      register: output
+
+    - name: DISPLAY ACL
+      debug: var=output.stdout
+

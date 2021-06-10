@@ -1,0 +1,14 @@
+---
+- name: "Get Junos OS configuration."
+  hosts: akt-juniper-srx
+  roles:
+    - Juniper.junos
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: "Get selected configuration hierarchies and save to file"
+      juniper_junos_config:
+        retrieve: "committed"
+        dest_dir: "{{ playbook_dir }}"
+
